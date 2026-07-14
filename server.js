@@ -19,7 +19,7 @@ app.post('/login', (req, res) => {
     const password = req.body.password || '';
     
     // ⚠️ VULNERABLE: Hardcoded credentials (for demonstration only!)
-    if (username === 'admin' && password === 'password123') {
+    if (username === 'admin' && password === 'password') {  // ← CHANGED!
         res.json({ 
             success: true, 
             message: 'Login successful',
