@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a0e0a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container { max-width: 500px; padding: 2rem; }
+        .code { font-size: 6rem; font-weight: 700; color: #e74c3c; text-shadow: 0 0 40px rgba(231, 76, 60, 0.3); }
+        h1 { font-size: 2rem; margin: 1rem 0; color: #FFD700; }
+        p { color: #999; line-height: 1.6; margin-bottom: 1.5rem; }
+        .icon { font-size: 4rem; margin-bottom: 1rem; }
+        .back-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: #8B4513;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .back-btn:hover { background: #D2691E; transform: scale(1.05); }
+        .security-note {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #555;
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚫</div>
+        <div class="code">403</div>
+        <h1>Access Forbidden</h1>
+        <p>You don't have permission to access this resource on this server.</p>
+        <p style="font-size:0.85rem; color:#666;">This area is restricted. Unauthorized access is prohibited.</p>
+        <br>
+        <a href="/" class="back-btn">← Back to Home</a>
+        <div class="security-note">🔒 Secure System • Access Logged</div>
+    </div>
+</body>
+</html>
