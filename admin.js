@@ -12,7 +12,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         errorMsg.style.color = '#2E7D32';
         errorMsg.textContent = '✅ Login successful! Redirecting...';
         
-        // Store login session
+        // Store login session - THIS IS CRITICAL
         localStorage.setItem('adminLoggedIn', 'true');
         
         // Disable button to prevent multiple clicks

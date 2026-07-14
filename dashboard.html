@@ -552,8 +552,13 @@
     </style>
 
     <script>
-        // ===== DASHBOARD LOGIC =====
+        // ===== AUTHENTICATION CHECK =====
+        // Check if user is logged in - Redirect if not
+        if (localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin.html';
+        }
 
+        // ===== MENU MANAGEMENT =====
         let menuItems = [
             { name: 'Rolex', desc: 'Chapati rolled with eggs, cabbage, tomatoes & onions', price: 5000 },
             { name: 'Luwombo', desc: 'Steamed beef in rich groundnut sauce with vegetables', price: 12000 },
@@ -656,11 +661,6 @@
                 localStorage.removeItem('adminLoggedIn');
                 window.location.href = 'admin.html';
             }
-        }
-
-        // Check if logged in
-        if (localStorage.getItem('adminLoggedIn') !== 'true') {
-            window.location.href = 'admin.html';
         }
 
         // Initialize
