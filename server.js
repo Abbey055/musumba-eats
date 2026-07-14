@@ -20,11 +20,11 @@ app.post('/login', (req, res) => {
     
     // ⚠️ VULNERABLE: Hardcoded credentials (for demonstration only!)
     if (username === 'admin' && password === 'password') {
-        // ✅ SUCCESS: Return plain text (Hydra detects NO fail string)
-        res.status(200).send('Login successful');
+        // ✅ SUCCESS: Simple response (Hydra detects NO fail string)
+        res.send('SUCCESS');
     } else {
-        // ❌ FAIL: Return plain text with the EXACT error message
-        res.status(200).send('Invalid credentials. Please try again');
+        // ❌ FAIL: Simple response with the EXACT fail string
+        res.send('FAIL: Invalid credentials');
     }
 });
 
