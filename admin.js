@@ -17,9 +17,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
         });
         
-        const result = await response.json();
+        const responseText = await response.text();
         
-        if (result.success) {
+        // Check for success (response contains "Login successful")
+        if (responseText.includes('Login successful')) {
             // Login successful
             localStorage.setItem('adminLoggedIn', 'true');
             errorMsg.style.color = '#2E7D32';
