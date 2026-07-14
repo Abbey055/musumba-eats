@@ -23,8 +23,8 @@ app.post('/login', (req, res) => {
         // ✅ SUCCESS: Simple response (Hydra detects NO fail string)
         res.send('SUCCESS');
     } else {
-        // ❌ FAIL: Simple response with the EXACT fail string
-        res.send('FAIL: Invalid credentials');
+        // ❌ FAIL: EXACT match for Hydra detection
+        res.send('Invalid credentials');
     }
 });
 
