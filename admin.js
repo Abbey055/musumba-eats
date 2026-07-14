@@ -1,4 +1,5 @@
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+// admin.js - Sends credentials to server
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const username = document.getElementById('username').value.trim();
@@ -6,37 +7,48 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const errorMsg = document.getElementById('errorMsg');
     const form = document.getElementById('loginForm');
     
-    // ⚠️ VULNERABLE: Hardcoded credentials (for demonstration only!)
-    if (username === 'admin' && password === 'password123') {
-        // Login successful
-        errorMsg.style.color = '#2E7D32';
-        errorMsg.textContent = '✅ Login successful! Redirecting...';
+    try {
+        // Send POST request to server
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        });
         
-        // Store login session - THIS IS CRITICAL
-        localStorage.setItem('adminLoggedIn', 'true');
+        const result = await response.json();
         
-        // Disable button to prevent multiple clicks
-        const btn = form.querySelector('button');
-        btn.disabled = true;
-        btn.textContent = '⏳ Redirecting...';
-        
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1000);
-    } else {
-        // Login failed - Generic message (no hint)
+        if (result.success) {
+            // Login successful
+            localStorage.setItem('adminLoggedIn', 'true');
+            errorMsg.style.color = '#2E7D32';
+            errorMsg.textContent = '✅ Login successful! Redirecting...';
+            
+            const btn = form.querySelector('button');
+            btn.disabled = true;
+            btn.textContent = '⏳ Redirecting...';
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        } else {
+            // Login failed
+            errorMsg.style.color = '#e74c3c';
+            errorMsg.textContent = 'Invalid credentials. Please try again';
+            
+            form.classList.add('shake');
+            setTimeout(() => {
+                form.classList.remove('shake');
+            }, 500);
+            
+            document.getElementById('password').value = '';
+            document.getElementById('password').focus();
+        }
+    } catch (error) {
         errorMsg.style.color = '#e74c3c';
-        errorMsg.textContent = '❌ Invalid credentials. Please try again.';
-        
-        // Shake animation
-        form.classList.add('shake');
-        setTimeout(() => {
-            form.classList.remove('shake');
-        }, 500);
-        
-        // Clear password field
-        document.getElementById('password').value = '';
-        document.getElementById('password').focus();
+        errorMsg.textContent = '❌ Server error. Please try again.';
+        console.error('Login error:', error);
     }
 });
 
