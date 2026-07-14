@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musumba Eats | Fresh Ugandan Food</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>🍲 Musumba Eats</h1>
+            <p>Authentic Ugandan Cuisine, Delivered to Your Doorstep</p>
+            <nav>
+                <a href="#menu">📋 Menu</a>
+                <a href="#order">🛒 Order Now</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="menu">
+        <h2>Our Popular Dishes</h2>
+        <p class="section-subtitle">Freshly prepared with love, using authentic Ugandan recipes</p>
+        
+        <div class="menu-grid">
+            <!-- 1. Rolex -->
+            <div class="menu-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop&crop=center" 
+                         alt="Rolex - Ugandan street food" 
+                         loading="lazy">
+                </div>
+                <div class="content">
+                    <span class="badge badge-popular">⭐ Popular</span>
+                    <h3>Rolex</h3>
+                    <p>Chapati rolled with eggs, cabbage, tomatoes & onions</p>
+                    <div class="order-row">
+                        <span class="price">UGX 5,000</span>
+                        <button onclick="addToCart('Rolex', 5000)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Luwombo -->
+            <div class="menu-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop&crop=center" 
+                         alt="Luwombo - Ugandan steamed beef" 
+                         loading="lazy">
+                </div>
+                <div class="content">
+                    <span class="badge badge-chef">👨‍🍳 Chef's Special</span>
+                    <h3>Luwombo</h3>
+                    <p>Steamed beef in rich groundnut sauce with vegetables</p>
+                    <div class="order-row">
+                        <span class="price">UGX 12,000</span>
+                        <button onclick="addToCart('Luwombo', 12000)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Katogo -->
+            <div class="menu-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=300&fit=crop&crop=center" 
+                         alt="Katogo - Matooke with beef" 
+                         loading="lazy">
+                </div>
+                <div class="content">
+                    <span class="badge badge-traditional">🌿 Traditional</span>
+                    <h3>Katogo</h3>
+                    <p>Matooke (green bananas) with beef, beans or groundnuts</p>
+                    <div class="order-row">
+                        <span class="price">UGX 8,000</span>
+                        <button onclick="addToCart('Katogo', 8000)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Chapati & Beans -->
+            <div class="menu-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1595515106960-acc6d32f3abc?w=400&h=300&fit=crop&crop=center" 
+                         alt="Chapati and Beans" 
+                         loading="lazy">
+                </div>
+                <div class="content">
+                    <span class="badge badge-value">💰 Best Value</span>
+                    <h3>Chapati & Beans</h3>
+                    <p>Freshly made chapati served with delicious bean stew</p>
+                    <div class="order-row">
+                        <span class="price">UGX 4,000</span>
+                        <button onclick="addToCart('Chapati & Beans', 4000)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Pilau -->
+            <div class="menu-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1633945274405-b6c2425de16f?w=400&h=300&fit=crop&crop=center" 
+                         alt="Ugandan Pilau" 
+                         loading="lazy">
+                </div>
+                <div class="content">
+                    <span class="badge badge-favorite">❤️ Customer Favorite</span>
+                    <h3>Pilau</h3>
+                    <p>Spiced rice with tender beef, flavored with local spices</p>
+                    <div class="order-row">
+                        <span class="price">UGX 10,000</span>
+                        <button onclick="addToCart('Pilau', 10000)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Groundnut Soup -->
+            <div class="menu-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop&crop=center" 
+                         alt="Ugandan Groundnut Soup" 
+                         loading="lazy">
+                </div>
+                <div class="content">
+                    <span class="badge badge-special">🥜 Rich & Creamy</span>
+                    <h3>Groundnut Soup</h3>
+                    <p>Creamy groundnut soup with beef, served with rice</p>
+                    <div class="order-row">
+                        <span class="price">UGX 9,000</span>
+                        <button onclick="addToCart('Groundnut Soup', 9000)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="order">
+        <div class="order-header">
+            <h2>🛒 Your Order</h2>
+            <span class="cart-badge" id="cart-count">0</span>
+        </div>
+        <div id="cart">
+            <div class="empty-cart">
+                <p>🍽️</p>
+                <p style="font-size:1.2rem; font-weight:600; color:#2c1810;">Your cart is empty</p>
+                <p style="color:#999; font-size:0.9rem;">Browse our delicious menu above!</p>
+            </div>
+        </div>
+        <div id="order-total">
+            <div class="total-row">
+                <h3>Total:</h3>
+                <span class="total-amount">UGX <span id="total-price">0</span></span>
+            </div>
+            <div class="order-actions">
+                <button class="clear-btn" onclick="clearCart()">🗑️ Clear Cart</button>
+                <button class="checkout-btn" onclick="placeOrder()">📦 Place Order</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 Musumba Eats. Fresh food, fast delivery.</p>
+            <p class="security-note">🔒 Secure Ordering System</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

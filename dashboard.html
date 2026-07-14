@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Musumba Eats</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <h1><i class="fas fa-utensils"></i> Musumba Eats</h1>
+            <span class="header-badge">Admin Dashboard</span>
+        </div>
+        <div class="header-right">
+            <a href="index.html" target="_blank" class="header-link">
+                <i class="fas fa-external-link-alt"></i> View Site
+            </a>
+            <a href="#" onclick="logout()" class="header-link logout-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #FFF3E0; color: #E65100;">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalItems">6</h3>
+                    <p>Total Menu Items</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #E8F5E9; color: #2E7D32;">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalOrders">0</h3>
+                    <p>Today's Orders</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #E3F2FD; color: #1565C0;">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalRevenue">UGX 0</h3>
+                    <p>Today's Revenue</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="dashboard-main">
+        <div class="dashboard-grid">
+            <!-- Add Item Form -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-plus-circle" style="color: #2E7D32;"></i> Add New Menu Item</h2>
+                </div>
+                <form id="addItemForm" class="add-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemName"><i class="fas fa-tag"></i> Dish Name <span class="required">*</span></label>
+                            <input type="text" id="itemName" placeholder="e.g., Rolex" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemPrice"><i class="fas fa-coins"></i> Price (UGX) <span class="required">*</span></label>
+                            <input type="number" id="itemPrice" placeholder="e.g., 5000" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemDesc"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea id="itemDesc" placeholder="Describe the dish..." rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-add">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                </form>
+            </div>
+
+            <!-- Current Menu Items -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-list" style="color: #8B4513;"></i> Current Menu Items</h2>
+                    <span class="item-count" id="itemCount">6 items</span>
+                </div>
+                <div id="menuItemsList" class="menu-items-list">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i> Loading...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* ===== DASHBOARD STYLES ===== */
+        
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #2c1810, #4a2a1a);
+            color: white;
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-left h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-left h1 i {
+            color: #FFD700;
+            margin-right: 0.5rem;
+        }
+
+        .header-badge {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .header-link {
+            color: #ccc;
+            text-decoration: none;
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .header-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .logout-link {
+            color: #e74c3c;
+        }
+
+        .logout-link:hover {
+            background: rgba(231, 76, 60, 0.2);
+            color: #ff6b6b;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding: 0 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .stat-info h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c1810;
+            margin-bottom: 0.1rem;
+        }
+
+        .stat-info p {
+            color: #888;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* Main Dashboard */
+        .dashboard-main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem 3rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid #f0ebe4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.2rem;
+            color: #2c1810;
+            font-weight: 600;
+        }
+
+        .card-header h2 i {
+            margin-right: 0.6rem;
+        }
+
+        .item-count {
+            background: #f5f0e8;
+            color: #666;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Form */
+        .add-form {
+            padding: 1.8rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group label i {
+            color: #888;
+            width: 1.2rem;
+            margin-right: 0.2rem;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid #e8e0d8;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            background: #faf8f5;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #8B4513;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .btn-add {
+            width: 100%;
+            background: linear-gradient(135deg, #2E7D32, #43A047);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-add:active {
+            transform: translateY(0);
+        }
+
+        .btn-add i {
+            margin-right: 0.5rem;
+        }
+
+        /* Menu Items List */
+        .menu-items-list {
+            padding: 0.8rem 1.8rem 1.8rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .menu-items-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .menu-items-list::-webkit-scrollbar-track {
+            background: #f5f0e8;
+            border-radius: 10px;
+        }
+
+        .menu-items-list::-webkit-scrollbar-thumb {
+            background: #D2691E;
+            border-radius: 10px;
+        }
+
+        .menu-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: #faf8f5;
+            border-radius: 10px;
+            margin-bottom: 0.6rem;
+            transition: all 0.3s;
+            border-left: 4px solid #D2691E;
+        }
+
+        .menu-list-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            background: white;
+        }
+
+        .menu-list-item .item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-list-item .item-info .item-name {
+            font-weight: 600;
+            color: #2c1810;
+            font-size: 1rem;
+        }
+
+        .menu-list-item .item-info .item-desc {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .menu-list-item .item-price {
+            font-weight: 700;
+            color: #2E7D32;
+            font-size: 0.95rem;
+            margin: 0 1rem;
+            white-space: nowrap;
+        }
+
+        .menu-list-item .btn-remove {
+            background: #fee;
+            color: #e74c3c;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .menu-list-item .btn-remove:hover {
+            background: #e74c3c;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            color: #999;
+            padding: 2rem;
+        }
+
+        .loading-spinner i {
+            margin-right: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 3rem 1rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-left {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+
+            .stats-section {
+                padding: 0 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-main {
+                padding: 0 1rem 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-list-item {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .menu-list-item .item-price {
+                margin-left: 0;
+            }
+
+            .card-header {
+                padding: 1rem 1.2rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .add-form {
+                padding: 1.2rem;
+            }
+
+            .menu-items-list {
+                padding: 0.5rem 1.2rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-link {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.8rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .stat-info h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+
+    <script>
+        // ===== DASHBOARD LOGIC =====
+
+        let menuItems = [
+            { name: 'Rolex', desc: 'Chapati rolled with eggs, cabbage, tomatoes & onions', price: 5000 },
+            { name: 'Luwombo', desc: 'Steamed beef in rich groundnut sauce with vegetables', price: 12000 },
+            { name: 'Katogo', desc: 'Matooke (green bananas) with beef, beans or groundnuts', price: 8000 },
+            { name: 'Chapati & Beans', desc: 'Freshly made chapati served with delicious bean stew', price: 4000 },
+            { name: 'Pilau', desc: 'Spiced rice with tender beef, flavored with local spices', price: 10000 },
+            { name: 'Groundnut Soup', desc: 'Creamy groundnut soup with beef, served with rice', price: 9000 }
+        ];
+
+        // Load saved items
+        const saved = localStorage.getItem('menuItems');
+        if (saved) {
+            try {
+                menuItems = JSON.parse(saved);
+            } catch(e) {
+                menuItems = [];
+            }
+        }
+
+        function displayMenuItems() {
+            const list = document.getElementById('menuItemsList');
+            const totalSpan = document.getElementById('totalItems');
+            const countSpan = document.getElementById('itemCount');
+            
+            if (!menuItems || menuItems.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-utensils"></i>
+                        <p>No items added yet.</p>
+                        <p style="font-size:0.85rem; color:#bbb;">Add your first menu item above!</p>
+                    </div>
+                `;
+                if (totalSpan) totalSpan.textContent = '0';
+                if (countSpan) countSpan.textContent = '0 items';
+                return;
+            }
+            
+            let html = '';
+            menuItems.forEach((item, index) => {
+                html += `
+                    <div class="menu-list-item">
+                        <div class="item-info">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-desc">${item.desc || ''}</span>
+                        </div>
+                        <span class="item-price">UGX ${(item.price || 0).toLocaleString()}</span>
+                        <button class="btn-remove" onclick="deleteItem(${index})">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </div>
+                `;
+            });
+            
+            list.innerHTML = html;
+            if (totalSpan) totalSpan.textContent = menuItems.length;
+            if (countSpan) countSpan.textContent = `${menuItems.length} items`;
+        }
+
+        function deleteItem(index) {
+            if (confirm(`Remove "${menuItems[index].name}" from the menu?`)) {
+                menuItems.splice(index, 1);
+                saveItems();
+                displayMenuItems();
+            }
+        }
+
+        function saveItems() {
+            localStorage.setItem('menuItems', JSON.stringify(menuItems));
+        }
+
+        document.getElementById('addItemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('itemName').value.trim();
+            const desc = document.getElementById('itemDesc').value.trim();
+            const price = parseInt(document.getElementById('itemPrice').value);
+            
+            if (!name || !price) {
+                alert('Please fill in all required fields!');
+                return;
+            }
+            
+            menuItems.push({ name, desc, price });
+            saveItems();
+            displayMenuItems();
+            this.reset();
+            
+            // Visual feedback
+            const btn = this.querySelector('.btn-add');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+            btn.style.background = '#2E7D32';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 2000);
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('adminLoggedIn');
+                window.location.href = 'admin.html';
+            }
+        }
+
+        // Check if logged in
+        if (localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'admin.html';
+        }
+
+        // Initialize
+        displayMenuItems();
+    </script>
+</body>
+</html>
